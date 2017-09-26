@@ -1,0 +1,14 @@
+/*Button{*/
+    /*-fx-background-color:white;*/
+/*}*/
+
+Label:hover {
+    -fx-background-color:powderblue;
+    -fx-text-fill:white;
+}
+
+
+/*Button:hover{*/
+    /*-fx-background-color:black;*/
+    /*-fx-text-fill:white;*/
+/*}*/
