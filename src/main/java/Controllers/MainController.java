@@ -33,7 +33,7 @@ public class MainController {
     @FXML
     private GridPane timeGrid;
     @FXML
-    private DatePicker datePicker;s
+    private DatePicker datePicker;
     @FXML
     private Button okBtn;
     @FXML
