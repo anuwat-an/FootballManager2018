@@ -1,5 +1,6 @@
 package Models;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
 public class ReservationLabel extends Label {
@@ -19,6 +20,8 @@ public class ReservationLabel extends Label {
         this.text = text;
 
         this.available = true;
+
+        this.setAlignment(Pos.CENTER);
     }
 
     public int getRow() { return this.row; }
@@ -50,6 +53,13 @@ public class ReservationLabel extends Label {
             this.available = false;
             this.setStyle("-fx-background-color: red");
         }
+    }
+
+    public void setAvailable() {
+        this.reserved = false;
+        this.selected = false;
+        this.available = true;
+        this.setStyle("-fx-background-color: none");
     }
 
 }

@@ -1,6 +1,8 @@
 package Controllers;
 
+import Models.ReservationInfo;
 import Models.ReservationLabel;
+import Models.ReservationManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,19 +18,24 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainController {
 
-    public ArrayList<ReservationLabel> getSelected() {
-        return selected;
-    }
-
     private ArrayList<ReservationLabel> selected;
-    public MainController(){
-        selected = new ArrayList<ReservationLabel>();
-    }
+    private ArrayList<ReservationLabel> labels;
+
+    private ReservationManager manager;
 
     @FXML
     private GridPane timeGrid;
@@ -36,6 +43,16 @@ public class MainController {
     private DatePicker datePicker;
     @FXML
     private Button okBtn;
+
+    private Date date = new Date();
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
+
+    public MainController(){
+        selected = new ArrayList<>();
+        labels = new ArrayList<>();
+        manager = new ReservationManager();
+    }
+
     @FXML
     public void initialize(){
 
@@ -44,7 +61,9 @@ public class MainController {
 
                 if(j == 0 && i!=0){
 
-                    timeGrid.add(new Label("STADIUM "+(i)),j,i);
+                    Label l = new Label("STADIUM "+(i));
+                    l.setStyle("-fx-font-size: 13");
+                    timeGrid.add(l,j,i);
 
                 }
 
@@ -65,6 +84,7 @@ public class MainController {
                         }
                     });
 
+                    labels.add(l);
                     timeGrid.add(l,j,i);
 //
                 }
@@ -72,7 +92,66 @@ public class MainController {
             }
         }
 
+        datePicker.setValue(LocalDate.now());
 
+        loadReservationInfos();
+
+    }
+
+    public void loadReservationInfos() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String dbURL = "jdbc:sqlite:ReservationInfoDB.db";
+            Connection connection = DriverManager.getConnection(dbURL);
+            if (connection != null) {
+                String query = "select * from ReservationInfos";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+
+                while (resultSet.next()) {
+                    String dateTimeStr = resultSet.getString("dateTime");
+                    int fieldNumber = resultSet.getInt("fieldNumber");
+                    int fieldPrice = resultSet.getInt("fieldPrice");
+                    String customerName = resultSet.getString("customerName");
+                    String customerTel = resultSet.getString("customerTel");
+
+                    this.date = dateFormat.parse(dateTimeStr);
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(this.date.toInstant(), ZoneId.systemDefault());
+                    ReservationInfo reservationInfo = new ReservationInfo(localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
+
+                    manager.addReservation(reservationInfo);
+                }
+            }
+            connection.close();
+
+            updateLabels();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateLabels() {
+        ArrayList<ReservationInfo> infos = manager.getReservations();
+
+        for (ReservationLabel label : labels) {
+            label.setAvailable();
+        }
+        for (ReservationInfo info : infos) {
+            int fieldNumber = info.getFieldNumber();
+            int time = info.getDateTime().toLocalTime().getHour()-7;
+
+            if (datePicker.getValue().equals(info.getDateTime().toLocalDate())) {
+                for (ReservationLabel label : labels) {
+                    if (label.getRow() == fieldNumber && label.getColumn() == time) {
+                        label.setReserved();
+                    }
+                }
+            }
+        }
     }
 
 
@@ -85,26 +164,29 @@ public class MainController {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AlertDialog_css/AlertDialog_css.fxml"));
 //        if(editIDField.getText() != ""){
-            try {
-                stage.initOwner(okBtn.getScene().getWindow());
-                stage.setScene(new Scene((Parent) loader.load()));
-                stage.setTitle("Appointment list");
+        try {
+            stage.initOwner(okBtn.getScene().getWindow());
+            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setTitle("Appointment list");
 
-                AlertController alertController = loader.getController();
-                alertController.labelsSlc = selected;
-                alertController.stage = stage;
+            AlertController alertController = loader.getController();
+            alertController.setLabelsSlc(selected);
+            alertController.setStage(stage);
+            alertController.setDate(datePicker.getValue());
+            alertController.setManager(manager);
 
-                stage.showAndWait();
-//                showAppoint();
+            System.out.println(manager.getReservations().size());
 
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            stage.showAndWait();
+//            showAppoint();
+         } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
-
+    public ArrayList<ReservationLabel> getSelected() {
+        return selected;
+    }
 
 }
 

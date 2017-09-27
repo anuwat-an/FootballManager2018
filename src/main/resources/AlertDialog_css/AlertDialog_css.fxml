@@ -41,7 +41,7 @@
                <children>
             <Button fx:id="okButton" layoutX="217.0" minWidth="80.0" mnemonicParsing="false" onAction="#confirmAction" text="Ok" />
                </children></Pane>
-        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancleAction" text="Cancel" HBox.hgrow="NEVER">
+        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" HBox.hgrow="NEVER">
           <HBox.margin>
             <Insets />
           </HBox.margin>
