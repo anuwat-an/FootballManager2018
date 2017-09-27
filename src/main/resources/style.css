@@ -2,7 +2,7 @@
     /*-fx-background-color:white;*/
 /*}*/
 
-Label:hover {
+ReservationLabel:hover {
     -fx-background-color:powderblue;
     -fx-text-fill:white;
 }

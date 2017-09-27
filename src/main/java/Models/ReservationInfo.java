@@ -12,10 +12,10 @@ public class ReservationInfo {
     private String customerName;
     private String customerTel;
 
-    public ReservationInfo(int id, LocalDateTime dateTime,
+    public ReservationInfo(LocalDateTime dateTime,
                            int fieldNumber, int fieldPrice,
                            String customerName, String customerTel) {
-        this.id = id;
+
         this.dateTime = dateTime;
         this.fieldNumber = fieldNumber;
         this.fieldPrice = fieldPrice;

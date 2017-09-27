@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.ReservationLabel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -19,18 +21,19 @@ import java.util.ArrayList;
 
 public class MainController {
 
-    public ArrayList<Label> getSelected() {
+    public ArrayList<ReservationLabel> getSelected() {
         return selected;
     }
 
-    private ArrayList<Label> selected;
+    private ArrayList<ReservationLabel> selected;
     public MainController(){
-        selected = new ArrayList<Label>();
+        selected = new ArrayList<ReservationLabel>();
     }
 
     @FXML
     private GridPane timeGrid;
-
+    @FXML
+    private DatePicker datePicker;s
     @FXML
     private Button okBtn;
     @FXML
@@ -42,16 +45,23 @@ public class MainController {
                 if(j == 0 && i!=0){
 
                     timeGrid.add(new Label("STADIUM "+(i)),j,i);
+
                 }
 
                 else {
-                    final Label l = new Label("test");
+                    ReservationLabel l = new ReservationLabel(i, j, "test");
 
-                    l.setPrefSize(90,70);
+                    l.setPrefSize(73.5,90);
                     l.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         public void handle(MouseEvent event) {
-                            l.setStyle("-fx-background-color: cornflowerblue");
-                            selected.add(l);
+                            if (l.isSelected()) {
+                                l.setSelected();
+                                selected.remove(l);
+                            }
+                            else {
+                                l.setSelected();
+                                selected.add(l);
+                            }
                         }
                     });
 
@@ -81,7 +91,8 @@ public class MainController {
                 stage.setTitle("Appointment list");
 
                 AlertController alertController = loader.getController();
-
+                alertController.labelsSlc = selected;
+                alertController.stage = stage;
 
                 stage.showAndWait();
 //                showAppoint();
