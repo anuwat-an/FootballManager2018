@@ -67,6 +67,7 @@ public class AlertController {
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
 
+                    l.setText(nameField.getText()+"\n"+telField.getText());
                     l.setReserved();
                 }
 

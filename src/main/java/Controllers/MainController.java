@@ -68,7 +68,7 @@ public class MainController {
                 }
 
                 else {
-                    ReservationLabel l = new ReservationLabel(i, j, "test");
+                    ReservationLabel l = new ReservationLabel(i, j, "Available");
 
                     l.setPrefSize(73.5,90);
                     l.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -138,6 +138,7 @@ public class MainController {
         ArrayList<ReservationInfo> infos = manager.getReservations();
 
         for (ReservationLabel label : labels) {
+            label.setText("Available");
             label.setAvailable();
         }
         for (ReservationInfo info : infos) {
@@ -147,6 +148,7 @@ public class MainController {
             if (datePicker.getValue().equals(info.getDateTime().toLocalDate())) {
                 for (ReservationLabel label : labels) {
                     if (label.getRow() == fieldNumber && label.getColumn() == time) {
+                        label.setText(info.getCustomerName()+"\n"+info.getCustomerTel());
                         label.setReserved();
                     }
                 }
