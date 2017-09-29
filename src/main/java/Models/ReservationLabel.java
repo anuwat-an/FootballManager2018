@@ -35,44 +35,42 @@ public class ReservationLabel extends Label {
     public boolean isAvailable() { return this.available; }
 
     public void setSelected() {
-//        if (selected) {
-//            if (available) {
-//                setAvailable();
-//            }
-//            else if (reserved) {
-//                setReserved();
-//            }
-//        }
-//        else {
-//            this.selected = true;
-//            this.setStyle("-fx-background-color: cornflowerblue");
-//        }
-//        this.selected = !this.selected;
-        if (!isReserved()) {
-            if (isSelected()) {
-                this.selected = false;
-                this.available = true;
-                this.setStyle("-fx-background-color: none");
-            } else {
-                this.available = false;
-                this.selected = true;
-                this.setStyle("-fx-background-color: cornflowerblue");
+        if (selected) {
+            if (available) {
+                setAvailable();
             }
+            else if (reserved) {
+                setReserved();
+            }
+            this.selected = false;
         }
+        else {
+            this.selected = true;
+            this.setStyle("-fx-background-color: cornflowerblue");
+        }
+//        if (!isReserved()) {
+//            if (isSelected()) {
+//                this.selected = false;
+//                this.available = true;
+//                this.setStyle("-fx-background-color: none");
+//            } else {
+//                this.available = false;
+//                this.selected = true;
+//                this.setStyle("-fx-background-color: cornflowerblue");
+//            }
+//        }
     }
 
     public void setReserved() {
-        if (!isReserved()) {
-            this.reserved = true;
-            this.selected = false;
-            this.available = false;
-            this.setStyle("-fx-background-color: red");
-        }
+        this.selected = false;
+        this.reserved = true;
+        this.available = false;
+        this.setStyle("-fx-background-color: red");
     }
 
     public void setAvailable() {
-        this.reserved = false;
         this.selected = false;
+        this.reserved = false;
         this.available = true;
         this.setStyle("-fx-background-color: none");
     }

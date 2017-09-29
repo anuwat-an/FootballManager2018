@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AlertController">
+<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AlertController">
   <children>
     <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <children>
@@ -28,6 +28,7 @@
             <Font name="System Bold" size="13.0" />
           </font>
         </Label>
+            <TextField fx:id="telField" />
       </children>
     </VBox>
     <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -40,16 +41,11 @@
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS">
                <children>
             <Button fx:id="okButton" layoutX="217.0" minWidth="80.0" mnemonicParsing="false" onAction="#confirmAction" text="Ok" />
+              <Button fx:id="cancelButton" cancelButton="true" layoutX="314.0" minWidth="80.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
                </children></Pane>
-        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" HBox.hgrow="NEVER">
-          <HBox.margin>
-            <Insets />
-          </HBox.margin>
-        </Button>
         <HBox fx:id="okParent" alignment="CENTER" />
       </children>
     </HBox>
-      <TextField fx:id="telField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />

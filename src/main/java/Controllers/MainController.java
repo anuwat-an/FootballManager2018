@@ -71,13 +71,14 @@ public class MainController {
 
                     l.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         public void handle(MouseEvent event) {
-                            if (l.isSelected()) {
-                                selected.remove(l);
+                            if (!l.isReserved()) {
+                                if (l.isSelected()) {
+                                    selected.remove(l);
+                                } else {
+                                    selected.add(l);
+                                }
+                                l.setSelected();
                             }
-                            else {
-                                selected.add(l);
-                            }
-                            l.setSelected();
                         }
                     });
 
@@ -155,17 +156,13 @@ public class MainController {
 
 
     public void okHandle(ActionEvent event) {
-        putInfo();
-    }
-
-    private void putInfo() {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AlertDialog_css/AlertDialog_css.fxml"));
 //        if(editIDField.getText() != ""){
         try {
             stage.initOwner(okBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
-            stage.setTitle("Appointment list");
+            stage.setTitle("Customer Info");
 
             AlertController alertController = loader.getController();
             alertController.setLabelsSlc(selected);
@@ -173,11 +170,9 @@ public class MainController {
             alertController.setDate(datePicker.getValue());
             alertController.setManager(manager);
 
-            System.out.println(manager.getReservations().size());
-
             stage.showAndWait();
 //            showAppoint();
-         } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
