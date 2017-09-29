@@ -29,11 +29,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class MainController {
 
-    private ArrayList<ReservationLabel> selected;
     private ArrayList<ReservationLabel> labels;
+    private ArrayList<ReservationLabel> selected;
 
     private ReservationManager manager;
 
@@ -70,23 +69,21 @@ public class MainController {
                 else {
                     ReservationLabel l = new ReservationLabel(i, j, "Available");
 
-                    l.setPrefSize(73.5,90);
                     l.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         public void handle(MouseEvent event) {
                             if (l.isSelected()) {
-                                l.setSelected();
                                 selected.remove(l);
                             }
                             else {
-                                l.setSelected();
                                 selected.add(l);
                             }
+                            l.setSelected();
                         }
                     });
 
                     labels.add(l);
                     timeGrid.add(l,j,i);
-//
+
                 }
 
             }
@@ -159,7 +156,6 @@ public class MainController {
 
     public void okHandle(ActionEvent event) {
         putInfo();
-
     }
 
     private void putInfo() {
@@ -184,10 +180,6 @@ public class MainController {
          } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public ArrayList<ReservationLabel> getSelected() {
-        return selected;
     }
 
 }

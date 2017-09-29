@@ -11,7 +11,7 @@
 
 <GridPane fx:id="mainGrid" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1403.0" minWidth="10.0" prefWidth="1193.3333740234375" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="1280.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="250.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -19,25 +19,25 @@
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane fx:id="timeGrid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="1280.0" style="-fx-background-color: lightgreen;" GridPane.rowIndex="1">
+        <GridPane fx:id="timeGrid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="307.0" prefWidth="1280.0" style="-fx-background-color: lightgreen;" GridPane.rowIndex="1">
             <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -128,24 +128,24 @@
             </Label>
          </children>
         </GridPane>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="1280.0">
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="1280.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <children>
-                <DatePicker fx:id="datePicker" layoutX="574.0" layoutY="139.0" onAction="#updateLabels" prefHeight="35.0" prefWidth="255.0" />
-                <Label layoutX="335.0" layoutY="138.0" prefHeight="35.0" prefWidth="130.0" text="วัน / เวลา ที่จอง" textFill="#000000af">
+                <DatePicker fx:id="datePicker" layoutX="641.0" layoutY="138.0" onAction="#updateLabels" prefHeight="35.0" prefWidth="255.0" />
+                <Label layoutX="393.0" layoutY="138.0" prefHeight="35.0" prefWidth="130.0" text="วัน / เวลา ที่จอง" textFill="#000000af">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Label layoutX="591.0" layoutY="44.0" prefHeight="35.0" prefWidth="235.0" style="-fx-font-family: 'Segoe UI Semibold';" text="INT FOOTBALL STADIUM">
+                <Label layoutX="524.0" layoutY="44.0" prefHeight="35.0" prefWidth="235.0" style="-fx-font-family: 'Segoe UI Semibold';" text="INT FOOTBALL STADIUM">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1280.0" GridPane.rowIndex="2">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1280.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <children>
-            <Button fx:id="okBtn" layoutX="591.0" layoutY="23.0" mnemonicParsing="false" onAction="#okHandle" prefHeight="53.0" prefWidth="102.0" text="OK" />
+            <Button fx:id="okBtn" layoutX="589.0" layoutY="24.0" mnemonicParsing="false" onAction="#okHandle" prefHeight="53.0" prefWidth="102.0" text="OK" />
          </children></Pane>
     </children>
 </GridPane>

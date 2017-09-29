@@ -22,6 +22,8 @@ public class ReservationLabel extends Label {
         this.available = true;
 
         this.setAlignment(Pos.CENTER);
+        this.setPrefSize(73.5,90);
+        this.setMaxWidth(Double.MAX_VALUE);
     }
 
     public int getRow() { return this.row; }
@@ -33,6 +35,19 @@ public class ReservationLabel extends Label {
     public boolean isAvailable() { return this.available; }
 
     public void setSelected() {
+//        if (selected) {
+//            if (available) {
+//                setAvailable();
+//            }
+//            else if (reserved) {
+//                setReserved();
+//            }
+//        }
+//        else {
+//            this.selected = true;
+//            this.setStyle("-fx-background-color: cornflowerblue");
+//        }
+//        this.selected = !this.selected;
         if (!isReserved()) {
             if (isSelected()) {
                 this.selected = false;

@@ -70,9 +70,10 @@ public class AlertController {
                     l.setText(nameField.getText()+"\n"+telField.getText());
                     l.setReserved();
                 }
+                labelsSlc.clear();
 
+                connection.close();
             }
-            connection.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -80,8 +81,6 @@ public class AlertController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        labelsSlc.clear();
-        System.out.print(manager.getReservations().size());
 
         stage.close();
     }
