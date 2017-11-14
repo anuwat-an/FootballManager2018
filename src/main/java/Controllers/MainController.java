@@ -31,8 +31,8 @@ import java.util.Locale;
 
 public class MainController {
 
-    private ArrayList<ReservationLabel> labels;
-    private ArrayList<ReservationLabel> selected;
+    private ArrayList<ReservationLabel> labels; // all labels
+    private ArrayList<ReservationLabel> selected; // being selected labels
 
     private ReservationManager manager;
 
@@ -42,6 +42,10 @@ public class MainController {
     private DatePicker datePicker;
     @FXML
     private Button okBtn;
+    @FXML
+    private Button removeBtn;
+    @FXML
+    private Button reportBtn;
 
     private Date date = new Date();
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
@@ -55,17 +59,16 @@ public class MainController {
     @FXML
     public void initialize(){
 
-        for (int i = 1; i <= timeGrid.getRowConstraints().size(); i++) {
-            for (int j = 0; j <timeGrid.getColumnConstraints().size() ; j++) {
+        for (int i=1; i<timeGrid.getRowConstraints().size(); i++) {
+            for (int j=0; j<timeGrid.getColumnConstraints().size() ; j++) {
 
-                if(j == 0 && i!=0){
+                if(j == 0){
 
-                    Label l = new Label("STADIUM "+(i));
+                    Label l = new Label("STADIUM " + i);
                     l.setStyle("-fx-font-size: 13");
-                    timeGrid.add(l,j,i);
+                    this.timeGrid.add(l,j,i);
 
                 }
-
                 else {
                     ReservationLabel l = new ReservationLabel(i, j, "Available");
 
@@ -82,17 +85,16 @@ public class MainController {
                         }
                     });
 
-                    labels.add(l);
-                    timeGrid.add(l,j,i);
-
+                    this.labels.add(l);
+                    this.timeGrid.add(l,j,i);
                 }
 
             }
         }
 
         datePicker.setValue(LocalDate.now());
-
         loadReservationInfos();
+        updateLabels();
 
     }
 
@@ -112,17 +114,14 @@ public class MainController {
                     int fieldPrice = resultSet.getInt("fieldPrice");
                     String customerName = resultSet.getString("customerName");
                     String customerTel = resultSet.getString("customerTel");
-
-                    this.date = dateFormat.parse(dateTimeStr);
-                    LocalDateTime localDateTime = LocalDateTime.ofInstant(this.date.toInstant(), ZoneId.systemDefault());
+                    date = dateFormat.parse(dateTimeStr);
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
                     ReservationInfo reservationInfo = new ReservationInfo(localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
 
                     manager.addReservation(reservationInfo);
                 }
             }
             connection.close();
-
-            updateLabels();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -132,6 +131,7 @@ public class MainController {
         }
     }
 
+    @FXML
     public void updateLabels() {
         ArrayList<ReservationInfo> infos = manager.getReservations();
 
@@ -139,9 +139,10 @@ public class MainController {
             label.setText("Available");
             label.setAvailable();
         }
+
         for (ReservationInfo info : infos) {
-            int fieldNumber = info.getFieldNumber();
-            int time = info.getDateTime().toLocalTime().getHour()-7;
+            int fieldNumber = info.getFieldNumber(); // row
+            int time = info.getDateTime().toLocalTime().getHour()-7; // column
 
             if (datePicker.getValue().equals(info.getDateTime().toLocalDate())) {
                 for (ReservationLabel label : labels) {
@@ -154,8 +155,8 @@ public class MainController {
         }
     }
 
-
-    public void okHandle(ActionEvent event) {
+    @FXML
+    public void okHandle() {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AlertDialog_css/AlertDialog_css.fxml"));
 //        if(editIDField.getText() != ""){
@@ -175,6 +176,16 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void removeHandle() {
+
+    }
+
+    @FXML
+    public void reportHandle() {
+
     }
 
 }
