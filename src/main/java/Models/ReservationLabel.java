@@ -10,6 +10,7 @@ public class ReservationLabel extends Label {
     private String text;
 
     private boolean selected;
+
     private boolean reserved;
     private boolean available;
 
@@ -22,56 +23,46 @@ public class ReservationLabel extends Label {
         this.available = true;
 
         this.setAlignment(Pos.CENTER);
-        this.setPrefSize(73.5,90);
+        this.setPrefSize(75,130);
         this.setMaxWidth(Double.MAX_VALUE);
+        this.setMaxHeight(Double.MAX_VALUE);
     }
 
     public int getRow() { return this.row; }
-
     public int getColumn() { return this.column; }
 
     public boolean isSelected() { return this.selected; }
+
     public boolean isReserved() { return this.reserved; }
     public boolean isAvailable() { return this.available; }
 
     public void setSelected() {
-        if (selected) {
-            if (available) {
-                setAvailable();
-            }
-            else if (reserved) {
-                setReserved();
-            }
-            this.selected = false;
-        }
-        else {
-            this.selected = true;
+        if (available && !selected) {
             this.setStyle("-fx-background-color: cornflowerblue");
         }
-//        if (!isReserved()) {
-//            if (isSelected()) {
-//                this.selected = false;
-//                this.available = true;
-//                this.setStyle("-fx-background-color: none");
-//            } else {
-//                this.available = false;
-//                this.selected = true;
-//                this.setStyle("-fx-background-color: cornflowerblue");
-//            }
-//        }
+        else if (available && selected) {
+            this.setStyle("-fx-background-color: none");
+        }
+        else if (reserved && !selected) {
+            this.setStyle("-fx-background-color: orange");
+        }
+        else if (reserved && selected) {
+            this.setStyle("-fx-background-color: red");
+        }
+        this.selected = !this.selected;
     }
 
     public void setReserved() {
-        this.selected = false;
         this.reserved = true;
         this.available = false;
         this.setStyle("-fx-background-color: red");
     }
 
     public void setAvailable() {
-        this.selected = false;
         this.reserved = false;
         this.available = true;
+        this.text = "Available";
+        this.setText("Available");
         this.setStyle("-fx-background-color: none");
     }
 

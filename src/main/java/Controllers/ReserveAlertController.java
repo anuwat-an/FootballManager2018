@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class AlertController {
+public class ReserveAlertController {
 
     private Stage stage;
     private ArrayList<ReservationLabel> labelsSlc;
@@ -38,7 +38,7 @@ public class AlertController {
     private Date date = new Date();
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
 
-    public AlertController(){
+    public ReserveAlertController(){
         labelsSlc = new ArrayList<ReservationLabel>();
     }
 
@@ -55,24 +55,32 @@ public class AlertController {
                     this.date = dateFormat.parse(dateTimeStr);
                     LocalDateTime localDateTime = LocalDateTime.ofInstant(this.date.toInstant(), ZoneId.systemDefault());
 
-                    ReservationInfo reservationInfo = new ReservationInfo(localDateTime, l.getRow(), 0, nameField.getText(), telField.getText());
-                    manager.addReservation(reservationInfo);
+                    double price = 0;
 
                     String query = "insert into ReservationInfos (dateTime,fieldNumber,fieldPrice,customerName,customerTel) " +
-                                    "values ('"+dateTimeStr+"',"+
-                                    l.getRow()+","+
-                                    0+","+
-                                    "'"+nameField.getText()+"',"+
-                                    "'"+telField.getText()+"')";
+                            "values ('"+dateTimeStr+"',"+
+                            l.getRow()+","+
+                            price+","+
+                            "'"+nameField.getText()+"',"+
+                            "'"+telField.getText()+"')";
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
 
+                    query = "select max(id) from ReservationInfos";
+//                    statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query);
+
+                    int id = resultSet.getInt(1);
+                    ReservationInfo reservationInfo = new ReservationInfo(id, localDateTime, l.getRow(), price, nameField.getText(), telField.getText());
+                    manager.addReservation(reservationInfo);
+
                     l.setText(nameField.getText()+"\n"+telField.getText());
                     l.setReserved();
+                    l.setSelected();
                 }
                 labelsSlc.clear();
-
                 connection.close();
+
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -105,4 +113,5 @@ public class AlertController {
     public void setDate(LocalDate date) {
         this.localDate = date;
     }
+
 }

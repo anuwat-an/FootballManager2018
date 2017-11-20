@@ -8,14 +8,14 @@ public class ReservationInfo {
 
     private LocalDateTime dateTime;
     private int fieldNumber;
-    private int fieldPrice;
+    private double fieldPrice;
     private String customerName;
     private String customerTel;
 
-    public ReservationInfo(LocalDateTime dateTime,
-                           int fieldNumber, int fieldPrice,
+    public ReservationInfo(int id, LocalDateTime dateTime,
+                           int fieldNumber, double fieldPrice,
                            String customerName, String customerTel) {
-
+        this.id = id;
         this.dateTime = dateTime;
         this.fieldNumber = fieldNumber;
         this.fieldPrice = fieldPrice;
@@ -35,7 +35,7 @@ public class ReservationInfo {
         return fieldNumber;
     }
 
-    public int getFieldPrice() {
+    public double getFieldPrice() {
         return fieldPrice;
     }
 

@@ -3,7 +3,6 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
@@ -12,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -57,37 +55,26 @@ public class MainController {
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
 
         for (int i=1; i<timeGrid.getRowConstraints().size(); i++) {
-            for (int j=0; j<timeGrid.getColumnConstraints().size() ; j++) {
+            for (int j=1; j<timeGrid.getColumnConstraints().size() ; j++) {
 
-                if(j == 0){
-
-                    Label l = new Label("STADIUM " + i);
-                    l.setStyle("-fx-font-size: 13");
-                    this.timeGrid.add(l,j,i);
-
-                }
-                else {
-                    ReservationLabel l = new ReservationLabel(i, j, "Available");
+                ReservationLabel l = new ReservationLabel(i, j, "Available");
 
                     l.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         public void handle(MouseEvent event) {
-                            if (!l.isReserved()) {
-                                if (l.isSelected()) {
-                                    selected.remove(l);
-                                } else {
-                                    selected.add(l);
-                                }
-                                l.setSelected();
+                            if (l.isSelected()) {
+                                selected.remove(l);
+                            } else {
+                                selected.add(l);
                             }
+                            l.setSelected();
                         }
                     });
 
                     this.labels.add(l);
                     this.timeGrid.add(l,j,i);
-                }
 
             }
         }
@@ -109,6 +96,7 @@ public class MainController {
                 ResultSet resultSet = statement.executeQuery(query);
 
                 while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
                     String dateTimeStr = resultSet.getString("dateTime");
                     int fieldNumber = resultSet.getInt("fieldNumber");
                     int fieldPrice = resultSet.getInt("fieldPrice");
@@ -116,7 +104,7 @@ public class MainController {
                     String customerTel = resultSet.getString("customerTel");
                     date = dateFormat.parse(dateTimeStr);
                     LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-                    ReservationInfo reservationInfo = new ReservationInfo(localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
+                    ReservationInfo reservationInfo = new ReservationInfo(id, localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
 
                     manager.addReservation(reservationInfo);
                 }
@@ -158,21 +146,21 @@ public class MainController {
     @FXML
     public void okHandle() {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AlertDialog_css/AlertDialog_css.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReserveDialog/ReserveDialog.fxml"));
 //        if(editIDField.getText() != ""){
         try {
             stage.initOwner(okBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Customer Info");
 
-            AlertController alertController = loader.getController();
-            alertController.setLabelsSlc(selected);
+            ReserveAlertController alertController = loader.getController();
             alertController.setStage(stage);
+            alertController.setLabelsSlc(selected);
             alertController.setDate(datePicker.getValue());
             alertController.setManager(manager);
 
             stage.showAndWait();
-//            showAppoint();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -180,7 +168,24 @@ public class MainController {
 
     @FXML
     public void removeHandle() {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CancelDialog/CancelDialog.fxml"));
+        try {
+            stage.initOwner(removeBtn.getScene().getWindow());
+            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setTitle("Confirm Cancel");
 
+            CancelAlertController alertController = loader.getController();
+            alertController.setStage(stage);
+            alertController.setLabelsSlc(selected);
+            alertController.setDate(datePicker.getValue());
+            alertController.setManager(manager);
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

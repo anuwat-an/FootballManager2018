@@ -1,5 +1,6 @@
 package Models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ReservationManager {
@@ -8,6 +9,15 @@ public class ReservationManager {
 
     public void addReservation(ReservationInfo reservationInfo) {
         this.reservationInfos.add(reservationInfo);
+    }
+
+    public ReservationInfo getReservation(LocalDateTime date, int fieldNumber) {
+        for (ReservationInfo info : reservationInfos) {
+            if (date.equals(info.getDateTime()) && fieldNumber == info.getFieldNumber()) {
+                return info;
+            }
+        }
+        return null;
     }
 
     public ArrayList<ReservationInfo> getReservations() {
