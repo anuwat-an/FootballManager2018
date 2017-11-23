@@ -3,6 +3,7 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
@@ -43,7 +44,7 @@ public class MainController {
     @FXML
     private Button removeBtn;
     @FXML
-    private Button reportBtn;
+    private Button reportBtn, payBtn;
 
     private Date date = new Date();
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
@@ -190,9 +191,37 @@ public class MainController {
 
     @FXML
     public void reportHandle() {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReportView/ReportView.fxml"));
+        try {
+            stage.initOwner(reportBtn.getScene().getWindow());
+            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setTitle("Report");
+            stage.showAndWait();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void payAction(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PayDialog.fxml"));
+        try {
+            stage.initOwner(reportBtn.getScene().getWindow());
+            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setTitle("Payment");
+
+            PaymentAlertController paymentAlertController = new PaymentAlertController();
+            paymentAlertController.setStage(stage);
+            paymentAlertController.setlabelsSlc(selected);
+            paymentAlertController.setManager(manager);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
