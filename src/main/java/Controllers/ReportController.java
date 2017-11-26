@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ReportController implements Initializable{
+public class ReportController {
     @FXML
     DatePicker fromDatePicker, ToDatePicker;
     @FXML
@@ -38,14 +38,14 @@ public class ReportController implements Initializable{
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        iNum.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("iNum"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("nameColumn"));
-        telColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("tel"));
-        stadiumColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("stadium"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("time"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("price"));
+    @FXML
+    public void initialize() {
+        iNum.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("customerName"));
+        telColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("customerTel"));
+        stadiumColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("fieldNumber"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,String>("dateTime"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<ReservationInfo,Integer>("dateTimec"));
 
         reportTable.setItems(lst);
     }

@@ -4,6 +4,7 @@ import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -22,7 +23,8 @@ public class CancelAlertController {
     private ReservationManager manager;
     private LocalDate localDate;
 
-    public void cancleHandle(ActionEvent actionEvent) {
+    @FXML
+    public void cancelHandle(ActionEvent actionEvent) {
         try {
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:ReservationInfoDB.db";
@@ -40,7 +42,8 @@ public class CancelAlertController {
                     manager.deleteReservation(info.getId());
 
                     l.setAvailable();
-                    l.setSelected();
+                    if (l.isSelected())
+                        l.setSelected();
                 }
                 labelsSlc.clear();
                 connection.close();
@@ -52,6 +55,11 @@ public class CancelAlertController {
             e.printStackTrace();
         }
 
+        stage.close();
+    }
+
+    @FXML
+    public void no() {
         stage.close();
     }
 

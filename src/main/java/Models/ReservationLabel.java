@@ -7,7 +7,6 @@ public class ReservationLabel extends Label {
 
     private int row;
     private int column;
-    private String text;
 
     private boolean selected;
 
@@ -18,7 +17,6 @@ public class ReservationLabel extends Label {
         super(text);
         this.row = row;
         this.column = column;
-        this.text = text;
 
         this.available = true;
 
@@ -61,7 +59,6 @@ public class ReservationLabel extends Label {
     public void setAvailable() {
         this.reserved = false;
         this.available = true;
-        this.text = "Available";
         this.setText("Available");
         this.setStyle("-fx-background-color: none");
     }

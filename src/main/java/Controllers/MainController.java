@@ -10,10 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -146,6 +148,13 @@ public class MainController {
 
     @FXML
     public void okHandle() {
+        for (ReservationLabel label : selected) {
+            if (label.isReserved()) {
+                createAlert("Error!", "can't do that brah");
+                return;
+            }
+        }
+
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReserveDialog/ReserveDialog.fxml"));
 //        if(editIDField.getText() != ""){
@@ -156,9 +165,9 @@ public class MainController {
 
             ReserveAlertController alertController = loader.getController();
             alertController.setStage(stage);
+            alertController.setManager(manager);
             alertController.setLabelsSlc(selected);
             alertController.setDate(datePicker.getValue());
-            alertController.setManager(manager);
 
             stage.showAndWait();
 
@@ -169,6 +178,13 @@ public class MainController {
 
     @FXML
     public void removeHandle() {
+        for (ReservationLabel label : selected) {
+            if (label.isAvailable()) {
+                createAlert("Error!", "can't do that brah");
+                return;
+            }
+        }
+
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/CancelDialog/CancelDialog.fxml"));
         try {
@@ -178,9 +194,9 @@ public class MainController {
 
             CancelAlertController alertController = loader.getController();
             alertController.setStage(stage);
+            alertController.setManager(manager);
             alertController.setLabelsSlc(selected);
             alertController.setDate(datePicker.getValue());
-            alertController.setManager(manager);
 
             stage.showAndWait();
 
@@ -205,22 +221,37 @@ public class MainController {
     }
 
     public void payAction(ActionEvent actionEvent) {
+        for (ReservationLabel label : selected) {
+            if (label.isAvailable()) {
+                createAlert("Error!", "can't do that brah");
+                return;
+            }
+        }
+
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PayDialog.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/PayDialog.fxml"));
         try {
-            stage.initOwner(reportBtn.getScene().getWindow());
+            stage.initOwner(payBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Payment");
 
-            PaymentAlertController paymentAlertController = new PaymentAlertController();
-            paymentAlertController.setStage(stage);
-            paymentAlertController.setlabelsSlc(selected);
-            paymentAlertController.setManager(manager);
+            PaymentAlertController alertController = loader.getController();
+            alertController.setStage(stage);
+            alertController.setManager(manager);
+            alertController.setDate(datePicker.getValue());
+            alertController.setlabelsSlc(selected);
             stage.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void createAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
     }
 }
 

@@ -35,9 +35,9 @@
                   <Label prefHeight="21.0" prefWidth="87.0" text="Name" />
                   <Label prefHeight="21.0" prefWidth="87.0" text="Hours" GridPane.rowIndex="1" />
                   <Label prefHeight="21.0" prefWidth="74.0" text="Price" GridPane.rowIndex="2" />
-                  <Label fx:id="nameHolder" alignment="CENTER" prefHeight="76.0" prefWidth="324.0" text="Label" GridPane.columnIndex="1" />
-                  <Label fx:id="hourHolder" alignment="CENTER" prefHeight="170.0" prefWidth="367.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="priceHolder" alignment="CENTER" prefHeight="86.0" prefWidth="254.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="nameHolder" alignment="CENTER" prefHeight="76.0" prefWidth="324.0" text="Unknown" GridPane.columnIndex="1" />
+                  <Label fx:id="hourHolder" alignment="CENTER" prefHeight="170.0" prefWidth="367.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="priceHolder" alignment="CENTER" prefHeight="86.0" prefWidth="254.0" text="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
       </children>
@@ -53,7 +53,7 @@
                <children>
             <Button fx:id="submitButton" layoutX="134.0" minWidth="80.0" mnemonicParsing="false" onAction="#submitAction" text="Submit" />
                </children></Pane>
-        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" text="Cancel" HBox.hgrow="NEVER">
+        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" HBox.hgrow="NEVER">
           <HBox.margin>
             <Insets />
           </HBox.margin>
