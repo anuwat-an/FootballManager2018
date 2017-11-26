@@ -3,6 +3,10 @@ package Models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * @author INT
+ */
+
 public class ReservationManager {
 
     ArrayList<ReservationInfo> reservationInfos = new ArrayList<ReservationInfo>();

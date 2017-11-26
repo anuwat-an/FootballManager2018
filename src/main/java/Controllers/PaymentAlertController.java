@@ -3,6 +3,7 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,11 +13,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+/**
+ * @author INT
+ */
 
 public class PaymentAlertController {
     private Stage stage;
@@ -96,7 +100,7 @@ public class PaymentAlertController {
             customerName = info.getCustomerName();
             slcIDs.add(info.getId());
             hours += 1;
-            price += 100;
+            price += info.getFieldPrice();
         }
         nameHolder.setText(customerName);
         hourHolder.setText(hours+"");

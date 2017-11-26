@@ -2,10 +2,13 @@ package Models;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author INT
+ */
+
 public class ReservationInfo {
 
     private int id;
-
     private LocalDateTime dateTime;
     private int fieldNumber;
     private double fieldPrice;

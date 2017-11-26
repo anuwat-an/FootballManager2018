@@ -3,14 +3,11 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sun.applet.Main;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -22,6 +19,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+/**
+ * @author INT
+ */
 
 public class ReserveAlertController {
 
@@ -37,10 +38,6 @@ public class ReserveAlertController {
 
     private Date date = new Date();
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
-
-    public ReserveAlertController(){
-        labelsSlc = new ArrayList<ReservationLabel>();
-    }
 
     @FXML
     public void confirmAction(ActionEvent event) {

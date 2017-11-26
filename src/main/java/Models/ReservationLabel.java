@@ -3,6 +3,10 @@ package Models;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
+/**
+ * @author INT
+ */
+
 public class ReservationLabel extends Label {
 
     private int row;
@@ -22,6 +26,8 @@ public class ReservationLabel extends Label {
 
         this.setAlignment(Pos.CENTER);
         this.setPrefSize(75,130);
+        this.setMinWidth(75);
+        this.setMinHeight(130);
         this.setMaxWidth(Double.MAX_VALUE);
         this.setMaxHeight(Double.MAX_VALUE);
     }

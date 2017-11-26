@@ -3,6 +3,7 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
@@ -15,6 +16,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+/**
+ * @author INT
+ */
 
 public class CancelAlertController {
 

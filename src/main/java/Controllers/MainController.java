@@ -3,10 +3,10 @@ package Controllers;
 import Models.ReservationInfo;
 import Models.ReservationLabel;
 import Models.ReservationManager;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +29,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+/**
+ * @author INT
+ */
 
 public class MainController {
 
@@ -129,6 +133,8 @@ public class MainController {
         for (ReservationLabel label : labels) {
             label.setText("Available");
             label.setAvailable();
+            if (label.isSelected())
+                label.setSelected();
         }
 
         for (ReservationInfo info : infos) {
@@ -157,7 +163,6 @@ public class MainController {
 
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReserveDialog/ReserveDialog.fxml"));
-//        if(editIDField.getText() != ""){
         try {
             stage.initOwner(okBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
@@ -246,7 +251,7 @@ public class MainController {
         }
     }
 
-    public void createAlert(String title, String message) {
+    private void createAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(title);
         alert.setContentText(message);
