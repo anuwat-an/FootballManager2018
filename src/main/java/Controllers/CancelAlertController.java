@@ -35,7 +35,7 @@ public class CancelAlertController {
                     LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(l.getColumn()+7, 0));
                     ReservationInfo info = manager.getReservation(localDateTime, l.getRow());
 
-                    String query = "delete from ReservationInfos where id=" + info.getId();
+                    String query = "update ReservationInfos set status='CANCEL' where id=" + info.getId();
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
 

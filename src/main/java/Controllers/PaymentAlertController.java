@@ -8,6 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,7 +36,37 @@ public class PaymentAlertController {
     @FXML
     public void submitAction(ActionEvent actionEvent) {
 
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String dbURL = "jdbc:sqlite:ReservationInfoDB.db";
+            Connection connection = DriverManager.getConnection(dbURL);
+            if (connection != null) {
 
+                for (int id : slcIDs) {
+                    String query = "update ReservationInfos set status='PAID' where id=" + id;
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query);
+
+                    manager.deleteReservation(id);
+                }
+
+                for (ReservationLabel l : labelsSlc) {
+                    l.setAvailable();
+                    if (l.isSelected())
+                        l.setSelected();
+                }
+
+                labelsSlc.clear();
+                connection.close();
+
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        stage.close();
 
     }
 

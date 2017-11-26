@@ -57,12 +57,12 @@ public class ReserveAlertController {
 
                     double price = 0;
 
-                    String query = "insert into ReservationInfos (dateTime,fieldNumber,fieldPrice,customerName,customerTel) " +
+                    String query = "insert into ReservationInfos (dateTime,fieldNumber,fieldPrice,customerName,customerTel,status) " +
                             "values ('"+dateTimeStr+"',"+
                             l.getRow()+","+
                             price+","+
                             "'"+nameField.getText()+"',"+
-                            "'"+telField.getText()+"')";
+                            "'"+telField.getText()+"', 'NOTPAID')";
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(query);
 
@@ -76,7 +76,8 @@ public class ReserveAlertController {
 
                     l.setText(nameField.getText()+"\n"+telField.getText());
                     l.setReserved();
-                    l.setSelected();
+                    if (l.isSelected())
+                        l.setSelected();
                 }
                 labelsSlc.clear();
                 connection.close();

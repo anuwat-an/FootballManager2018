@@ -94,7 +94,7 @@ public class MainController {
             String dbURL = "jdbc:sqlite:ReservationInfoDB.db";
             Connection connection = DriverManager.getConnection(dbURL);
             if (connection != null) {
-                String query = "select * from ReservationInfos";
+                String query = "select * from ReservationInfos where status='NOTPAID'";
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
 
