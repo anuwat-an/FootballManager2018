@@ -52,7 +52,7 @@ public class ReserveAlertController {
                     this.date = dateFormat.parse(dateTimeStr);
                     LocalDateTime localDateTime = LocalDateTime.ofInstant(this.date.toInstant(), ZoneId.systemDefault());
 
-                    double price = 0;
+                    double price = 600;
 
                     String query = "insert into ReservationInfos (dateTime,fieldNumber,fieldPrice,customerName,customerTel,status) " +
                             "values ('"+dateTimeStr+"',"+

@@ -6,7 +6,9 @@ import Models.ReservationManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -30,15 +32,33 @@ public class PaymentAlertController {
 
     private ArrayList<Integer> slcIDs = new ArrayList<>();
 
+    private double price;
+
     @FXML
     private Label nameHolder;
     @FXML
     private Label hourHolder;
     @FXML
     private Label priceHolder;
+    @FXML
+    private TextField paidTextField;
+    @FXML
+    private Label changeLabel;
+    @FXML
+    private Label warningLabel;
+    @FXML
+    private Button submitButton;
+    @FXML
+    private Button cancelButton;
 
     @FXML
     public void submitAction(ActionEvent actionEvent) {
+
+        double paid = Integer.parseInt(paidTextField.getText());
+        if (price > paid) {
+            warningLabel.setText("Insufficient fund");
+            return;
+        }
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -64,13 +84,19 @@ public class PaymentAlertController {
                 connection.close();
 
             }
+
+            warningLabel.setText("");
+            double change = paid - price;
+            changeLabel.setText(change+"");
+            paidTextField.setEditable(false);
+            submitButton.setDisable(true);
+            cancelButton.setText("Exit");
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        stage.close();
 
     }
 
@@ -91,7 +117,7 @@ public class PaymentAlertController {
     private void setInfoLabels() {
         String customerName = "";
         int hours = 0;
-        double price = 0;
+        price = 0;
 
         for (ReservationLabel l : labelsSlc) {
             LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(l.getColumn()+7, 0));

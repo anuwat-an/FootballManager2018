@@ -115,8 +115,8 @@ public class MainController {
 
                     manager.addReservation(reservationInfo);
                 }
+                connection.close();
             }
-            connection.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -219,6 +219,8 @@ public class MainController {
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Report");
             stage.showAndWait();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
