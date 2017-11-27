@@ -1,10 +1,11 @@
-package Controllers;
+package controllers;
 
-import Models.ReservationInfo;
-import Models.ReservationLabel;
-import Models.ReservationManager;
+import dataSources.DataSource;
+import dataSources.SQLiteSource;
+import models.ReservationInfo;
+import models.ReservationLabel;
+import models.ReservationManager;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,16 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * @author INT
@@ -36,34 +29,36 @@ import java.util.Locale;
 
 public class MainController {
 
-    private ArrayList<ReservationLabel> labels; // all labels
-    private ArrayList<ReservationLabel> selected; // being selected labels
-
-    private ReservationManager manager;
-
     @FXML
     private GridPane timeGrid;
     @FXML
     private DatePicker datePicker;
     @FXML
-    private Button okBtn;
-    @FXML
-    private Button removeBtn;
-    @FXML
-    private Button reportBtn, payBtn;
+    private Button okBtn, removeBtn, reportBtn, payBtn;
 
-    private Date date = new Date();
-    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
+    private ArrayList<ReservationLabel> labels; // all labels
+    private ArrayList<ReservationLabel> selected; // being selected labels
+
+    private ReservationManager manager;
+    private DataSource dataSource;
 
     public MainController(){
         selected = new ArrayList<>();
         labels = new ArrayList<>();
+
         manager = new ReservationManager();
+        dataSource = new SQLiteSource();
     }
 
     @FXML
+    /**
+     * @1 insert labels into time grid
+     * @2 set datePicker to present
+     * @3 load reservation info from database and assign to manager
+     * @4 update labels in time grid
+     */
     public void initialize() {
-
+        /* @1 */
         for (int i=1; i<timeGrid.getRowConstraints().size(); i++) {
             for (int j=1; j<timeGrid.getColumnConstraints().size() ; j++) {
 
@@ -86,65 +81,41 @@ public class MainController {
             }
         }
 
+        /* @2 */
         datePicker.setValue(LocalDate.now());
-        loadReservationInfos();
+        /* @3 */
+        manager.setReservationInfo(dataSource.loadReservationInfo());
+        /* @4 */
         updateLabels();
-
-    }
-
-    public void loadReservationInfos() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String dbURL = "jdbc:sqlite:ReservationInfoDB.db";
-            Connection connection = DriverManager.getConnection(dbURL);
-            if (connection != null) {
-                String query = "select * from ReservationInfos where status='NOTPAID'";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String dateTimeStr = resultSet.getString("dateTime");
-                    int fieldNumber = resultSet.getInt("fieldNumber");
-                    int fieldPrice = resultSet.getInt("fieldPrice");
-                    String customerName = resultSet.getString("customerName");
-                    String customerTel = resultSet.getString("customerTel");
-                    date = dateFormat.parse(dateTimeStr);
-                    LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-                    ReservationInfo reservationInfo = new ReservationInfo(id, localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
-
-                    manager.addReservation(reservationInfo);
-                }
-                connection.close();
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
+    /**
+     * @1 set labels in time grid to "Available"
+     * @2 get reservation info from manager
+     * @3 set labels match info's date, time, and field to "Reserved"
+     */
     public void updateLabels() {
-        ArrayList<ReservationInfo> infos = manager.getReservations();
-
+        /* @1 */
         for (ReservationLabel label : labels) {
-            label.setText("Available");
+//            label.setText("Available");
             label.setAvailable();
             if (label.isSelected())
                 label.setSelected();
         }
 
-        for (ReservationInfo info : infos) {
-            int fieldNumber = info.getFieldNumber(); // row
-            int time = info.getDateTime().toLocalTime().getHour()-7; // column
+        /* @2 */
+        ArrayList<ReservationInfo> info = manager.getReservationInfo();
 
-            if (datePicker.getValue().equals(info.getDateTime().toLocalDate())) {
+        /* @3 */
+        for (ReservationInfo reservationInfo : info) {
+            int fieldNumber = reservationInfo.getFieldNumber(); // row
+            int time = reservationInfo.getDateTime().toLocalTime().getHour()-7; // column
+
+            if (datePicker.getValue().equals(reservationInfo.getDateTime().toLocalDate())) {
                 for (ReservationLabel label : labels) {
                     if (label.getRow() == fieldNumber && label.getColumn() == time) {
-                        label.setText(info.getCustomerName()+"\n"+info.getCustomerTel());
+                        label.setText(reservationInfo.getCustomerName()+"\n"+reservationInfo.getCustomerTel());
                         label.setReserved();
                     }
                 }
@@ -153,26 +124,38 @@ public class MainController {
     }
 
     @FXML
+    /**
+     * @1 check if there are selected fields and are available
+     * @2 show customer info dialog
+     */
     public void okHandle() {
+        /* @1 */
+        if (selected.size() == 0) {
+            createAlert("Error! No fields are selected.", "Please select available fields.");
+            return;
+        }
         for (ReservationLabel label : selected) {
             if (label.isReserved()) {
-                createAlert("Error!", "can't do that brah");
+                createAlert("Error! Reserved fields are selected.", "Please unselect reserved fields.");
                 return;
             }
         }
 
+        /* @2 */
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReserveDialog/ReserveDialog.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/reserveDialog/ReserveDialog.fxml"));
         try {
             stage.initOwner(okBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Customer Info");
+            stage.initModality(Modality.WINDOW_MODAL);
 
             ReserveAlertController alertController = loader.getController();
             alertController.setStage(stage);
             alertController.setManager(manager);
-            alertController.setLabelsSlc(selected);
+            alertController.setSelectedLabels(selected);
             alertController.setDate(datePicker.getValue());
+            alertController.setDataSource(dataSource);
 
             stage.showAndWait();
 
@@ -182,26 +165,38 @@ public class MainController {
     }
 
     @FXML
+    /**
+     * @1 check if there are selected fields and are reserved
+     * @2 show confirm remove dialog
+     */
     public void removeHandle() {
+        /* @1 */
+        if (selected.size() == 0) {
+            createAlert("Error! No fields are selected.", "Please select reserved fields.");
+            return;
+        }
         for (ReservationLabel label : selected) {
             if (label.isAvailable()) {
-                createAlert("Error!", "can't do that brah");
+                createAlert("Error! Available fields are selected.", "Please unselect available fields.");
                 return;
             }
         }
 
+        /* @2 */
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CancelDialog/CancelDialog.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/cancelDialog/CancelDialog.fxml"));
         try {
             stage.initOwner(removeBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Confirm Cancel");
+            stage.initModality(Modality.WINDOW_MODAL);
 
             CancelAlertController alertController = loader.getController();
             alertController.setStage(stage);
             alertController.setManager(manager);
-            alertController.setLabelsSlc(selected);
+            alertController.setSelectedLabels(selected);
             alertController.setDate(datePicker.getValue());
+            alertController.setDataSource(dataSource);
 
             stage.showAndWait();
 
@@ -211,48 +206,75 @@ public class MainController {
     }
 
     @FXML
+    /**
+     * @1 show report window
+     */
     public void reportHandle() {
+        /* @1 */
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReportView/ReportView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/reportView/ReportView.fxml"));
         try {
             stage.initOwner(reportBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Report");
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            ReportController controller = loader.getController();
+            controller.setDataSource(dataSource);
+
             stage.showAndWait();
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void payAction(ActionEvent actionEvent) {
+    @FXML
+    /**
+     * @1 check if there are selected fields and are reserved
+     * @2 show payment dialog
+     */
+    public void payAction() {
+        /* @1 */
+        if (selected.size() == 0) {
+            createAlert("Error! No fields are selected.", "Please select reserved fields.");
+            return;
+        }
         for (ReservationLabel label : selected) {
             if (label.isAvailable()) {
-                createAlert("Error!", "can't do that brah");
+                createAlert("Error! Available fields are selected.", "Please unselect available fields.");
                 return;
             }
         }
 
+        /* @2 */
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/PayDialog.fxml"));
         try {
             stage.initOwner(payBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Payment");
+            stage.initModality(Modality.WINDOW_MODAL);
 
             PaymentAlertController alertController = loader.getController();
             alertController.setStage(stage);
             alertController.setManager(manager);
             alertController.setDate(datePicker.getValue());
-            alertController.setlabelsSlc(selected);
+            alertController.setSelectedLabels(selected);
+            alertController.setDataSource(dataSource);
+
             stage.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * show alert modal box
+     * @param title
+     * @param message
+     */
     private void createAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(title);

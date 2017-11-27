@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReportController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -81,7 +81,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="okDateBtn" mnemonicParsing="false" onAction="#initReport" text="OK" GridPane.columnIndex="1" />
+                  <Button fx:id="okDateBtn" mnemonicParsing="false" onAction="#updateReportRows" text="OK" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <ComboBox fx:id="statusCombo" prefWidth="150.0" promptText="Status" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -101,7 +101,7 @@
         </rowConstraints>
          <children>
             <Label alignment="CENTER" prefHeight="21.0" prefWidth="187.0" text="ยอดรวม" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="amountAll" alignment="CENTER" prefHeight="21.0" prefWidth="196.0" text="0.00" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="totalPrice" alignment="CENTER" prefHeight="21.0" prefWidth="196.0" text="0.00" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

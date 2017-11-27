@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.ArrayList;
 
 public class ReservationManager {
 
-    ArrayList<ReservationInfo> reservationInfos = new ArrayList<ReservationInfo>();
+    ArrayList<ReservationInfo> reservationInfo = new ArrayList<>();
 
     public void addReservation(ReservationInfo reservationInfo) {
-        this.reservationInfos.add(reservationInfo);
+        this.reservationInfo.add(reservationInfo);
     }
 
     public ReservationInfo getReservation(LocalDateTime date, int fieldNumber) {
-        for (ReservationInfo info : reservationInfos) {
+        for (ReservationInfo info : reservationInfo) {
             if (date.equals(info.getDateTime()) && fieldNumber == info.getFieldNumber()) {
                 return info;
             }
@@ -24,17 +24,21 @@ public class ReservationManager {
         return null;
     }
 
-    public ArrayList<ReservationInfo> getReservations() {
-        return this.reservationInfos;
-    }
-
     public void deleteReservation(int id) {
-        for (ReservationInfo re : reservationInfos) {
+        for (ReservationInfo re : reservationInfo) {
             if (re.getId() == id) {
-                this.reservationInfos.remove(re);
+                this.reservationInfo.remove(re);
                 break;
             }
         }
+    }
+
+    public ArrayList<ReservationInfo> getReservationInfo() {
+        return this.reservationInfo;
+    }
+
+    public void setReservationInfo(ArrayList<ReservationInfo> info) {
+        this.reservationInfo = info;
     }
 
 }
