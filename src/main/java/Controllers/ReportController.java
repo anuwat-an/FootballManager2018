@@ -34,7 +34,7 @@ public class ReportController {
     @FXML
     Button okDateBtn;
     @FXML
-    Label amountAll;
+    Label amountAll, warningDate;
 
     @FXML
     TableView<ReportInfo> reportTable;
@@ -69,7 +69,6 @@ public class ReportController {
         fromDatePicker.setValue(LocalDate.now());
         ToDatePicker.setValue(LocalDate.now());
 
-        initReport();
 
         reportTable.setItems(lst);
     }
@@ -81,9 +80,14 @@ public class ReportController {
         LocalDate toDate = ToDatePicker.getValue();
         if (fromDate.isAfter(toDate)) {
             // warn user
+            warningDate.setText("Invalid Date");
             return;
         }
-
+        if(statusCombo.getValue() == null){
+            warningDate.setText("Choose Status !");
+            return;
+        }
+        warningDate.setText("");
         lst.clear();
         try {
             Class.forName("org.sqlite.JDBC");
