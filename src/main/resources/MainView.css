@@ -7,6 +7,15 @@ ReservationLabel:hover {
     -fx-text-fill:white;
 }
 
+#bgGrid{
+    -fx-background-image: url("bg.jpg");
+    -fx-background-size: cover;
+}
+
+#titleLabel{
+    -fx-stroke-width: 5;
+    -fx-stroke: white;
+}
 
 /*Button:hover{*/
     /*-fx-background-color:black;*/
