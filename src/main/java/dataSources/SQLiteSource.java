@@ -31,39 +31,6 @@ public class SQLiteSource implements DataSource {
     }
 
     @Override
-    public ArrayList<ReservationInfo> loadReservationInfo() {
-        ArrayList<ReservationInfo> info = new ArrayList<>();
-        try {
-            Connection connection = connect();
-            if (connection != null) {
-                String query = "select * from ReservationInfo where status='NOTPAID'";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String dateTimeStr = resultSet.getString("dateTime");
-                    int fieldNumber = resultSet.getInt("fieldNumber");
-                    int fieldPrice = resultSet.getInt("fieldPrice");
-                    String customerName = resultSet.getString("customerName");
-                    String customerTel = resultSet.getString("customerTel");
-                    Date date = ToolsLibrary.dateTimeFormat.parse(dateTimeStr);
-                    LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-                    ReservationInfo reservationInfo = new ReservationInfo(id, localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
-
-                    info.add(reservationInfo);
-                }
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return info;
-    }
-
-    @Override
     public int getLastID() {
         int id = 0;
         try {
@@ -128,7 +95,7 @@ public class SQLiteSource implements DataSource {
     }
 
     @Override
-    public ArrayList<ReservationInfo> loadReportInfo(String status) {
+    public ArrayList<ReservationInfo> loadReservationInfo(String status) {
         ArrayList<ReservationInfo> info = new ArrayList<>();
 
         try {

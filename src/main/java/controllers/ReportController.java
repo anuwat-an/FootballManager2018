@@ -1,7 +1,6 @@
 package controllers;
 
 import dataSources.DataSource;
-import library.ToolsLibrary;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,12 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ReservationInfo;
 
-import java.sql.*;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author INT
@@ -77,7 +72,7 @@ public class ReportController {
         warningDate.setText("");
         list.clear();
 
-        ArrayList<ReservationInfo> info = dataSource.loadReportInfo(statusCombo.getValue());
+        ArrayList<ReservationInfo> info = dataSource.loadReservationInfo(statusCombo.getValue());
         for (ReservationInfo reservationInfo : info) {
             if (reservationInfo.getDateTime().toLocalDate().isBefore(fromDate) ||
                 reservationInfo.getDateTime().toLocalDate().isAfter(toDate))

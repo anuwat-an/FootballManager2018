@@ -8,7 +8,7 @@ ReservationLabel:hover {
 }
 
 #bgGrid{
-    -fx-background-image: url("bg.jpg");
+    -fx-background-image: url("background.jpg");
     -fx-background-size: cover;
 }
 

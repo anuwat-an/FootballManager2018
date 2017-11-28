@@ -84,7 +84,7 @@ public class MainController {
         /* @2 */
         datePicker.setValue(LocalDate.now());
         /* @3 */
-        manager.setReservationInfo(dataSource.loadReservationInfo());
+        manager.setReservationInfo(dataSource.loadReservationInfo("NOTPAID"));
         /* @4 */
         updateLabels();
     }
