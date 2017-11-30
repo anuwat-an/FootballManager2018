@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import library.Library;
 import models.ReservationInfo;
 
 import java.time.LocalDate;
@@ -45,9 +46,9 @@ public class ReportController {
         timeColumn.setCellValueFactory(new PropertyValueFactory<ReportInfo,String>("time"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<ReportInfo,Double>("price"));
 
-        statusCombo.getItems().add("PAID");
-        statusCombo.getItems().add("NOTPAID");
-        statusCombo.getItems().add("CANCEL");
+        statusCombo.getItems().add("Paid");
+        statusCombo.getItems().add("Not Paid");
+        statusCombo.getItems().add("Canceled");
 
         fromDatePicker.setValue(LocalDate.now());
         ToDatePicker.setValue(LocalDate.now());
@@ -72,7 +73,7 @@ public class ReportController {
         warningDate.setText("");
         list.clear();
 
-        ArrayList<ReservationInfo> info = dataSource.loadReservationInfo(statusCombo.getValue());
+        ArrayList<ReservationInfo> info = dataSource.loadReservationInfo(Library.reservationStatus.get(statusCombo.getValue()));
         for (ReservationInfo reservationInfo : info) {
             if (reservationInfo.getDateTime().toLocalDate().isBefore(fromDate) ||
                 reservationInfo.getDateTime().toLocalDate().isAfter(toDate))
