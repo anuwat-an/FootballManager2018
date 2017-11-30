@@ -32,7 +32,7 @@
         </HBox>
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS">
                <children>
-              <Button fx:id="noButton" cancelButton="true" layoutX="313.0" minWidth="80.0" mnemonicParsing="false" onAction="#no" text="NO" />
+              <Button fx:id="noButton" cancelButton="true" layoutX="313.0" minWidth="80.0" mnemonicParsing="false" onAction="#noButtonHandle" text="NO" />
             <Button fx:id="yesButton" layoutX="207.0" minWidth="80.0" mnemonicParsing="false" onAction="#cancelHandle" text="YES" />
                </children></Pane>
         <HBox fx:id="okParent" alignment="CENTER" />

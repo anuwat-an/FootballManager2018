@@ -59,7 +59,7 @@ public class CancelAlertController {
     }
 
     @FXML
-    public void no() {
+    public void noButtonHandle() {
         stage.close();
     }
 
