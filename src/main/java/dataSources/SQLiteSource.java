@@ -1,7 +1,7 @@
 package dataSources;
 
 import models.ReservationInfo;
-import library.Library;
+import library.ToolsLibrary;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -112,7 +112,7 @@ public class SQLiteSource implements DataSource {
                     int fieldPrice = resultSet.getInt("fieldPrice");
                     String customerName = resultSet.getString("customerName");
                     String customerTel = resultSet.getString("customerTel");
-                    Date date = Library.dateTimeFormat.parse(dateTimeStr);
+                    Date date = ToolsLibrary.dateTimeFormat.parse(dateTimeStr);
                     LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
                     ReservationInfo reservationInfo = new ReservationInfo(id, localDateTime, fieldNumber, fieldPrice, customerName, customerTel);
 

@@ -65,7 +65,7 @@ public class PaymentAlertController {
         changeLabel.setText(change+"");
         paidTextField.setEditable(false);
         submitButton.setDisable(true);
-        cancelButton.setText("Exit");
+        cancelButton.setText("Done");
 
         for (int id : ids) {
             manager.deleteReservation(id);

@@ -4,7 +4,7 @@ import models.ReservationInfo;
 import models.ReservationLabel;
 import models.ReservationManager;
 import dataSources.DataSource;
-import library.Library;
+import library.ToolsLibrary;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -51,7 +51,7 @@ public class ReserveAlertController {
             /* @3 */
             for (ReservationLabel l : selectedLabels) {
                 String dateTimeStr = localDate.getDayOfMonth() + "/" + localDate.getMonthValue() + "/" + localDate.getYear() + " " + (l.getColumn() + 7);
-                Date date = Library.dateTimeFormat.parse(dateTimeStr);
+                Date date = ToolsLibrary.dateTimeFormat.parse(dateTimeStr);
                 LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
                 double price = this.reservationPrice;
 

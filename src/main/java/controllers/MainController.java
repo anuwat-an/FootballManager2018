@@ -91,12 +91,15 @@ public class MainController {
 
     @FXML
     /**
-     * @1 set labels in time grid to "Available"
-     * @2 get reservation info from manager
-     * @3 set labels match info's date, time, and field to "Reserved"
+     * @1 clear all selected labels in selected
+     * @2 set labels in time grid to "Available"
+     * @3 get reservation info from manager
+     * @4 set labels match info's date, time, and field to "Reserved"
      */
     public void updateLabels() {
         /* @1 */
+        this.selected.clear();
+        /* @2 */
         for (ReservationLabel label : labels) {
 //            label.setText("Available");
             label.setAvailable();
@@ -104,10 +107,10 @@ public class MainController {
                 label.setSelected();
         }
 
-        /* @2 */
+        /* @3 */
         ArrayList<ReservationInfo> info = manager.getReservationInfo();
 
-        /* @3 */
+        /* @4 */
         for (ReservationInfo reservationInfo : info) {
             int fieldNumber = reservationInfo.getFieldNumber(); // row
             int time = reservationInfo.getDateTime().toLocalTime().getHour()-7; // column
@@ -217,7 +220,7 @@ public class MainController {
             stage.initOwner(reportBtn.getScene().getWindow());
             stage.setScene(new Scene((Parent) loader.load()));
             stage.setTitle("Report");
-            stage.initModality(Modality.WINDOW_MODAL);
+//            stage.initModality(Modality.NONE);
 
             ReportController controller = loader.getController();
             controller.setDataSource(dataSource);
